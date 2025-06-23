@@ -1,0 +1,249 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CVRPSolverTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">inout</a>
+</div>
+
+<h1>Coverage Summary for Class: CVRPSolverTest (inout)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CVRPSolverTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (60/60)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package inout;
+&nbsp;
+&nbsp;import algo.CVRPSolver;
+&nbsp;import data.CSVLoader;
+&nbsp;import org.junit.jupiter.api.Test;
+&nbsp;import static org.junit.jupiter.api.Assertions.*;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.*;
+&nbsp;
+<b class="fc">&nbsp;public class CVRPSolverTest {</b>
+&nbsp;
+&nbsp;    private Depot createDepot() {
+<b class="fc">&nbsp;        return new Depot(0, 50, 50);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private List&lt;Customer&gt; generateRandomCustomers(int count, double minX, double maxX, double minY, double maxY) {
+<b class="fc">&nbsp;        List&lt;Customer&gt; customers = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        Random rand = new Random();</b>
+&nbsp;
+<b class="fc">&nbsp;        for (int i = 1; i &lt;= count; i++) {</b>
+<b class="fc">&nbsp;            double x = minX + rand.nextDouble() * (maxX - minX);</b>
+<b class="fc">&nbsp;            double y = minY + rand.nextDouble() * (maxY - minY);</b>
+<b class="fc">&nbsp;            customers.add(new Customer(i, x, y));</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return customers;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void testSingleCustomer() {
+<b class="fc">&nbsp;        Depot depot = createDepot();</b>
+<b class="fc">&nbsp;        List&lt;Customer&gt; customers = List.of(new Customer(1, 5, 5));</b>
+&nbsp;
+<b class="fc">&nbsp;        CVRPSolver solver = new CVRPSolver(depot, customers);</b>
+<b class="fc">&nbsp;        solver.solve();</b>
+&nbsp;
+<b class="fc">&nbsp;        assertEquals(1, solver.vehicles.size(), &quot;Should use one vehicle for one customer.&quot;);</b>
+<b class="fc">&nbsp;        assertEquals(1, solver.vehicles.getFirst().route.size(), &quot;Route should contain one customer.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void testNoCustomers() {
+<b class="fc">&nbsp;        Depot depot = createDepot();</b>
+<b class="fc">&nbsp;        List&lt;Customer&gt; customers = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        CVRPSolver solver = new CVRPSolver(depot, customers);</b>
+<b class="fc">&nbsp;        solver.solve();</b>
+&nbsp;
+<b class="fc">&nbsp;        assertEquals(0, solver.vehicles.size(), &quot;No vehicles should be used when there are no customers.&quot;);</b>
+&nbsp;    }
+&nbsp;    @Test
+&nbsp;    void test4Customer(){
+<b class="fc">&nbsp;        Depot depot = new Depot(0,5,10);</b>
+<b class="fc">&nbsp;        List&lt;Customer&gt; customers = Arrays.asList(</b>
+&nbsp;                new Customer(1, 10, 20),
+&nbsp;                new Customer(2, 30, 20),
+&nbsp;                new Customer(3, 10, 15),
+&nbsp;                new Customer(4, 15, 10)
+&nbsp;            );
+<b class="fc">&nbsp;        CVRPSolver solver = new CVRPSolver(depot, customers);</b>
+<b class="fc">&nbsp;        solver.solve();</b>
+<b class="fc">&nbsp;        assertFalse(solver.vehicles.isEmpty(), &quot;Solver should produce at least one route.&quot;);</b>
+&nbsp;
+&nbsp;
+&nbsp;    }
+&nbsp;    @Test
+&nbsp;    void testExactVehicleCapacity() {
+<b class="fc">&nbsp;        Depot depot = createDepot();</b>
+<b class="fc">&nbsp;        List&lt;Customer&gt; customers = generateRandomCustomers(25, 10, 250,100,500); // vehicleCapacity = 10</b>
+&nbsp;
+<b class="fc">&nbsp;        CVRPSolver solver = new CVRPSolver(depot, customers);</b>
+<b class="fc">&nbsp;        solver.solve();</b>
+<b class="fc">&nbsp;        assertFalse(solver.vehicles.isEmpty(), &quot;Solver should produce at least one route.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void testMultipleVehicles() {
+<b class="fc">&nbsp;        Depot depot = createDepot();</b>
+<b class="fc">&nbsp;        List&lt;Customer&gt; customers = generateRandomCustomers(25, 75, 451,100,500); // 3 vehicles expected</b>
+&nbsp;
+<b class="fc">&nbsp;        CVRPSolver solver = new CVRPSolver(depot, customers);</b>
+<b class="fc">&nbsp;        solver.solve();</b>
+&nbsp;
+<b class="fc">&nbsp;        assertEquals(3, solver.vehicles.size(), &quot;Should use 3 vehicles for 25 customers.&quot;);</b>
+<b class="fc">&nbsp;        int totalCustomers = solver.vehicles.stream().mapToInt(v -&gt; v.route.size()).sum();</b>
+<b class="fc">&nbsp;        assertEquals(25, totalCustomers, &quot;All customers should be assigned to routes.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void testNoDuplicateCustomers() {
+<b class="fc">&nbsp;        Depot depot = new Depot(0, 522, 672);</b>
+<b class="fc">&nbsp;        List&lt;Customer&gt; customers = generateRandomCustomers(15, 540, 780,480,750);</b>
+<b class="fc">&nbsp;        CVRPSolver solver = new CVRPSolver(depot, customers);</b>
+<b class="fc">&nbsp;        solver.solve();</b>
+&nbsp;
+<b class="fc">&nbsp;        Set&lt;Integer&gt; visited = new HashSet&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Vehicle v : solver.vehicles) {</b>
+<b class="fc">&nbsp;            for (Customer c : v.route) {</b>
+<b class="fc">&nbsp;                assertTrue(visited.add(c.id), STR.&quot;IO.Customer \{c.id} is visited more than once.&quot;);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;    @Test
+&nbsp;    void testRandomizedCustomerPositions() {
+<b class="fc">&nbsp;        Depot depot = new Depot(0, 50, 50);</b>
+<b class="fc">&nbsp;        List&lt;Customer&gt; customers = generateRandomCustomers(25, 150, 250,250,400);</b>
+&nbsp;
+<b class="fc">&nbsp;        CVRPSolver solver = new CVRPSolver(depot, customers);</b>
+<b class="fc">&nbsp;        solver.solve();</b>
+&nbsp;
+<b class="fc">&nbsp;        assertFalse(solver.vehicles.isEmpty(), &quot;Solver should produce at least one route.&quot;);</b>
+&nbsp;    }
+&nbsp;    @Test
+&nbsp;
+&nbsp;    void testBigData() throws IOException {
+<b class="fc">&nbsp;        Depot depot = new Depot(0 , 50 , 50);</b>
+<b class="fc">&nbsp;        List&lt;Customer&gt; customers = CSVLoader.loadCustomersFromCSV(&quot;C:\\Users\\DevaannamalaiRavikum\\Desktop\\VRP-sbt\\vrp\\Data\\customer.csv&quot;);</b>
+<b class="fc">&nbsp;        CVRPSolver solver = new CVRPSolver(depot, customers);</b>
+<b class="fc">&nbsp;        solver.solve();</b>
+<b class="fc">&nbsp;        assertFalse(solver.vehicles.isEmpty(), &quot;Solver should produce at least one route.&quot;);</b>
+&nbsp;    }
+&nbsp;    @Test
+&nbsp;
+&nbsp;    void testBigData1() throws IOException {
+<b class="fc">&nbsp;        Depot depot = new Depot(0 , 50 , 50);</b>
+<b class="fc">&nbsp;        List&lt;Customer&gt; customers = CSVLoader.loadCustomersFromCSV(&quot;C:\\Users\\DevaannamalaiRavikum\\Desktop\\VRP-sbt\\vrp\\Data\\customer2.csv&quot;);</b>
+<b class="fc">&nbsp;        CVRPSolver solver = new CVRPSolver(depot, customers);</b>
+<b class="fc">&nbsp;        solver.solve();</b>
+<b class="fc">&nbsp;        assertFalse(solver.vehicles.isEmpty(), &quot;Solver should produce at least one route.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-06-20 16:19</div>
+</div>
+</body>
+</html>
