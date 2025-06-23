@@ -30,13 +30,10 @@ public class SweepAlgorithm {
             }
         }
 
-
         if (!currentVehicle.route.isEmpty()) {
             vehicles.add(currentVehicle);
         }
 
         return vehicles;
     }
-
-
 }

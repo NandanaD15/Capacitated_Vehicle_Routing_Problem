@@ -5,8 +5,6 @@ class Customer {
     private int demand;
 
 
-
-
     public Customer(int id, double x, double y, int demand) {
         this.id = id;
         this.x = x;
