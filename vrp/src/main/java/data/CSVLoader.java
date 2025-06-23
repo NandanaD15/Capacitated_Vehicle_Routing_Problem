@@ -1,6 +1,8 @@
+package java.data;
+
 import java.io.*;
 import java.util.*;
-
+import inout.Customer;
 public class CSVLoader {
 
     public static List<Customer> loadCustomersFromCSV(String filePath) throws IOException {

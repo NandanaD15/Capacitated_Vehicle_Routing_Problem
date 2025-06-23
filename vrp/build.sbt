@@ -5,8 +5,11 @@ lazy val root = project
   .settings(
     name := "VRP",
     version := "0.1.0-SNAPSHOT",
-
     scalaVersion := scala3Version,
 
-    libraryDependencies += "org.scalameta" %% "munit" % "1.0.0" % Test
+    libraryDependencies ++= Seq(
+      "org.scalameta" %% "munit" % "1.0.0" % "test",
+      "org.junit.jupiter" % "junit-jupiter-api" % "5.11.0" % "test",
+      "org.junit.jupiter" % "junit-jupiter-engine" % "5.11.0" % "test"
+    )
   )

@@ -1,7 +1,8 @@
+package java.inout;
 
-class Customer {
-    double x, y;
-    int id;
+public class Customer {
+    public  final double x, y;
+    public int id;
 
     public Customer(int id, double x, double y) {
         this.id = id;
@@ -23,7 +24,7 @@ class Customer {
 
     @Override
     public String toString() {
-        return STR."Customer \{id} (\{x}, \{y})";
+        return STR."IO.Customer \{id} (\{x}, \{y})";
     }
 }
 

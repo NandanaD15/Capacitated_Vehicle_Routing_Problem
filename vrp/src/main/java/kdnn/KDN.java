@@ -1,3 +1,6 @@
+package java.kdnn;
+
+import java.inout.Customer;
 
 public class KDN {
     Customer customer;

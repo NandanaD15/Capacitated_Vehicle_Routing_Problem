@@ -1,10 +1,12 @@
+package java.inout;
+
 import java.util.ArrayList;
 import java.util.List;
 
-class Vehicle {
+public class Vehicle {
     int capacity;
     Depot depot;
-    List<Customer> route;
+    public List<Customer> route;
 
     public Vehicle(int capacity, Depot depot) {
         this.capacity = capacity;

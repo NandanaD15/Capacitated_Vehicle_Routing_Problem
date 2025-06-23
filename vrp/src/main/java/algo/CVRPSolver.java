@@ -1,9 +1,16 @@
+package java.algo;
+
+import java.inout.Customer;
+import java.inout.Depot;
+import java.inout.Vehicle;
+import java.kdnn.KDTree;
+
 import java.util.List;
 import java.util.ArrayList;
 public class CVRPSolver {
     Depot depot;
     List<Customer> customers;
-    List<Vehicle> vehicles;
+    public List<Vehicle> vehicles;
 
     int vehicleCapacity=10;
 
@@ -44,11 +51,11 @@ public class CVRPSolver {
     public void printRoutes() {
         int routeNumber = 1;
         for (Vehicle vehicle : vehicles) {
-            System.out.print(STR."Route \{routeNumber}: Depot -> ");
+            System.out.print(STR."Route \{routeNumber}: IO.Depot -> ");
             for (Customer customer : vehicle.route) {
-                System.out.print(STR."Customer \{customer.id} -> ");
+                System.out.print(STR."IO.Customer \{customer.id} -> ");
             }
-            System.out.println("Depot");
+            System.out.println("IO.Depot");
             routeNumber++;
         }
     }

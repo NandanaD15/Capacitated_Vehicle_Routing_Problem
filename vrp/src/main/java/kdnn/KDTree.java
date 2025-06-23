@@ -1,3 +1,7 @@
+package java.kdnn;
+
+import java.inout.Customer;
+
 import java.util.List;
 
 public class KDTree {
