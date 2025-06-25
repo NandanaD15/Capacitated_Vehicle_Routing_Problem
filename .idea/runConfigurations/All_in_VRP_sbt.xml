@@ -1,10 +1,12 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="All in VRP-sbt" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
     <module name="VRP-sbt" />
+    <option name="ALTERNATIVE_JRE_PATH" value="21 (2)" />
     <option name="PACKAGE_NAME" value="" />
     <option name="MAIN_CLASS_NAME" value="" />
     <option name="METHOD_NAME" value="" />
     <option name="TEST_OBJECT" value="package" />
+    <option name="VM_PARAMETERS" value="--enable-preview" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
